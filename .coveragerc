@@ -1,0 +1,6 @@
+[run]
+source = IMAPI
+omit = 
+    tests/*
+    autoapp.py
+
