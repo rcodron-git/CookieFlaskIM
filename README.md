@@ -1,6 +1,25 @@
 # cookflaskIM
 
-project to show the example how integrate API for Ingram Micro non-official
+This project is a **NON OFFICIAL** demonstration on how to use the API for **reseller** provided by Ingram Micro.
+There is no support for this project, it is **just a demonstration**.
+
+**At this time, I won't add any new features to this project.** it's provide as is.
+
+## Ingram Micro API
+
+
+#### For Resellers
+You must be client of Ingram Micro and have a valid account to use the API.
+And you can find the reseller API documentation [here](https://developer.ingrammicro.com/reseller/api-documentation/United_States)
+to use the Ingram Micro API, you need to create an account on the API portal and create an application to get the API key and secret.
+
+#### For Vendors
+Sorry, I don't have any information about the vendor API. But the process should be similar to the reseller API.
+
+#### Webhooks
+The API provides webhooks to get notifications about the changes in the orders, but I didn't implement this feature in this project.
+You can test the webhooks using the [webhook.site](https://webhook.site/)
+You can find the webhook documentation [here](https://developer.ingrammicro.com/reseller/webhooks)
 
 ## Docker Quickstart
 
