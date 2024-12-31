@@ -16,6 +16,8 @@ from IMAPI.extensions import (
     login_manager,
     migrate,
 )
+from .settings import SQLALCHEMY_DATABASE_URI, SECRET_KEY, SESSION_TYPE
+from .extensions import db, migrate, session
 
 
 def create_app(config_object="IMAPI.settings"):
@@ -24,6 +26,12 @@ def create_app(config_object="IMAPI.settings"):
     :param config_object: The configuration object to use.
     """
     app = Flask(__name__.split(".")[0])
+    app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+    app.config['SECRET_KEY'] = SECRET_KEY
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SESSION_TYPE'] = SESSION_TYPE
+    #Generate a Correlation ID for each request
+    #app.config['REQUEST_ID_UNIQUE_VALUE_PREFIX'] = generate_request_id()
     app.config.from_object(config_object)
     register_extensions(app)
     register_blueprints(app)
@@ -31,6 +39,10 @@ def create_app(config_object="IMAPI.settings"):
     register_shellcontext(app)
     register_commands(app)
     configure_logger(app)
+
+    with app.app_context():
+        db.create_all()
+
     return app
 
 
@@ -43,6 +55,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+    session.init_app(app)
     flask_static_digest.init_app(app)
     return None
 

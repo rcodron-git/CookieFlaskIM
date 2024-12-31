@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Détails de la commande</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Champ</th>
+                    <th>Valeur</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Numéro de commande Ingram</td>
+                    <td>{{ order.ingramOrderNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Date de commande Ingram</td>
+                    <td>{{ order.ingramOrderDate }}</td>
+                </tr>
+                <tr>
+                    <td>Numéro de commande client</td>
+                    <td>{{ order.customerOrderNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Numéro de commande fournisseur</td>
+                    <td>{{ order.vendorSalesOrderNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Nom du fournisseur</td>
+                    <td>{{ order.vendorName }}</td>
+                </tr>
+                <tr>
+                    <td>Nom de l'entreprise de l'utilisateur final</td>
+                    <td>{{ order.endUserCompanyName }}</td>
+                </tr>
+                <tr>
+                    <td>Total de la commande</td>
+                    <td>{{ order.orderTotal }}</td>
+                </tr>
+                <tr>
+                    <td>Statut de la commande</td>
+                    <td>{{ order.orderStatus }}</td>
+                </tr>
+                <!-- Ajoutez d'autres champs de commande ici -->
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

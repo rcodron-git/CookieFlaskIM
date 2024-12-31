@@ -1,0 +1,114 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Search Product</h1>
+    <form id="searchForm" method="GET" action="{{ url_for('user.search_product') }}" class="mt-3">
+        <div class="form-group">
+            <label for="pageSize">Page Size</label>
+            <input type="number" class="form-control" id="pageSize" name="pageSize" value="25">
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" id="type" name="type">
+                <option value="IM::physical">Physical</option>
+                <option value="IM::digital">Digital</option>
+                <option value="IM::any" selected>Any</option>
+                <option value="IM::subscription">Subscription</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hasDiscounts">Has Discounts</label>
+            <select class="form-control" id="hasDiscounts" name="hasDiscounts">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vendor">Vendor</label>
+            <input type="text" class="form-control" id="vendor" name="vendor">
+        </div>
+        <div class="form-group">
+            <label for="vendorPartNumber">Vendor Part Number</label>
+            <input type="text" class="form-control" id="vendorPartNumber" name="vendorPartNumber">
+        </div>
+        <div class="form-group">
+            <label for="vendorNumber">Vendor Number</label>
+            <input type="text" class="form-control" id="vendorNumber" name="vendorNumber">
+        </div>
+        <div class="form-group">
+            <label for="keyword">Keyword</label>
+            <input type="text" class="form-control" id="keyword" name="keyword">
+        </div>
+        <div class="form-group">
+            <label for="category">Category</label>
+            <input type="text" class="form-control" id="category" name="category">
+        </div>
+        <div class="form-group">
+            <label for="skipAuthorisation">Skip Authorisation</label>
+            <select class="form-control" id="skipAuthorisation" name="skipAuthorisation">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="groupName">Group Name</label>
+            <input type="text" class="form-control" id="groupName" name="groupName">
+        </div>
+        <div class="form-group">
+            <label for="planName">Plan Name</label>
+            <input type="text" class="form-control" id="planName" name="planName">
+        </div>
+        <div class="form-group">
+            <label for="planId">Plan ID</label>
+            <input type="text" class="form-control" id="planId" name="planId">
+        </div>
+        <div class="form-group">
+            <label for="showGroupInfo">Show Group Info</label>
+            <select class="form-control" id="showGroupInfo" name="showGroupInfo">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    {% if catalog %}
+    <h2 class="mt-5">Search Results</h2>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Vendor Name</th>
+                <th>Ingram Part Number</th>
+                <th>Vendor Part Number</th>
+                <th>Has Discounts</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in catalog %}
+            <tr>
+                <td>{{ item.description }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.vendorName }}</td>
+                <td>{{ item.ingramPartNumber }}</td>
+                <td>{{ item.vendorPartNumber }}</td>
+                <td>{{ item.hasDiscounts }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        var elements = this.elements;
+        for (var i = 0; i < elements.length; i++) {
+            if (elements[i].value === '') {
+                elements[i].name = '';
+            }
+        }
+    });
+</script>
+{% endblock %}

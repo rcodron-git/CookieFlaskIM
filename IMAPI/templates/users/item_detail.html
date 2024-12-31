@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Détails du produit</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Champ</th>
+                    <th>Valeur</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Numéro de pièce Ingram</td>
+                    <td>{{ item.ingramPartNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Numéro de pièce du fournisseur</td>
+                    <td>{{ item.vendorPartNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Autorisé à la vente</td>
+                    <td>{{ item.productAuthorized }}</td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>{{ item.description }}</td>
+                </tr>
+                <tr>
+                    <td>UPC</td>
+                    <td>{{ item.upc }}</td>
+                </tr>
+                <tr>
+                    <td>Catégorie de produit</td>
+                    <td>{{ item.productCategory }}</td>
+                </tr>
+                <tr>
+                    <td>Sous-catégorie de produit</td>
+                    <td>{{ item.productSubcategory }}</td>
+                </tr>
+                <tr>
+                    <td>Nom du fournisseur</td>
+                    <td>{{ item.vendorName }}</td>
+                </tr>
+                <tr>
+                    <td>Numéro du fournisseur</td>
+                    <td>{{ item.vendorNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Statut du produit</td>
+                    <td>{{ item.productStatusCode }}</td>
+                </tr>
+                <tr>
+                    <td>Classe de produit</td>
+                    <td>{{ item.productClass }}</td>
+                </tr>
+                {% if item.additionalInformation %}
+                    <tr>
+                        <td>Poids du produit</td>
+                        <td>{{ item.additionalInformation.productWeight[0].weight }} {{ item.additionalInformation.productWeight[0].weightUnit }}</td>
+                    </tr>
+                    <tr>
+                        <td>Hauteur</td>
+                        <td>{{ item.additionalInformation.height }} {{ item.additionalInformation.dimensionUnit }}</td>
+                    </tr>
+                    <tr>
+                        <td>Largeur</td>
+                        <td>{{ item.additionalInformation.width }} {{ item.additionalInformation.dimensionUnit }}</td>
+                    </tr>
+                    <tr>
+                        <td>Longueur</td>
+                        <td>{{ item.additionalInformation.length }} {{ item.additionalInformation.dimensionUnit }}</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        {% if item.indicators %}
+            <h2>Indicateurs</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Valeur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in item.indicators.items() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if item.ciscoFields %}
+            <h2>Champs Cisco</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Valeur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in item.ciscoFields.items() %}
+                        <tr>
+                            <td>{{ key }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if item.additionalInformation %}
+            <h2>Informations supplémentaires</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Champ</th>
+                        <th>Valeur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in item.additionalInformation.items() %}
+                        {% if key != 'productWeight' %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

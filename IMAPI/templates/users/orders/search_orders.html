@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Résultats de la recherche de commandes</h1>
+        <h3>Nombre de commandes trouvées : {{ recordsFound }}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Numéro de commande Ingram</th>
+                    <th>Date de commande Ingram</th>
+                    <th>Numéro de commande client</th>
+                    <th>Numéro de commande fournisseur</th>
+                    <th>Nom du fournisseur</th>
+                    <th>Nom de l'entreprise de l'utilisateur final</th>
+                    <th>Total de la commande</th>
+                    <th>Statut de la commande</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders.orders %}
+                    <tr>
+                        <td>{{ order.ingramOrderNumber }}
+                            <a href="{{ url_for('user.order_detail', order_number='{}'.format(order.ingramOrderNumber)) }}">Voir les détails</a>
+                            <!--{{ url_for('user.order_detail', order_number='20-VWMRP') }}-->
+                        </td>
+
+                        <td>{{ order.ingramOrderDate }}</td>
+                        <td>{{ order.customerOrderNumber }}</td>
+                        <td>{{ order.vendorSalesOrderNumber }}</td>
+                        <td>{{ order.vendorName }}</td>
+                        <td>{{ order.endUserCompanyName }}</td>
+                        <td>{{ order.orderTotal }}</td>
+                        <td>{{ order.orderStatus }}</td>
+                        <td><button class="btn btn-secondary btn-sm dropdown-toggle" onclick="toggleNestedTable({{ loop.index }})">sub orders</button></td>
+                    </tr>
+                    {% if order.subOrders %}
+                        <tr class="nested-table-separator" id="nested-table-{{ loop.index }}" style="display: none;">
+                            <td colspan="9">
+                                <table class="table table-bordered nested-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Numéro de sous-commande</th>
+                                            <th>Total de la sous-commande</th>
+                                            <th>Statut de la sous-commande</th>
+                                            <th>Lien</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for subOrder in order.subOrders %}
+                                            <tr>
+                                                <td>{{ subOrder.subOrderNumber }}</td>
+                                                <td>{{ subOrder.subOrderTotal }}</td>
+                                                <td>{{ subOrder.subOrderStatus }}</td>
+                                                <td><a href="{{ subOrder.links.href }}">{{ subOrder.links.href }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <h4>Pages suivantes</h4>
+            {% if previousPage %}
+                <a href="{{ url_for('user.orders_search', page=previousPage) }}"><< Précédent</a>
+            {% endif %}
+            {% if nextPage %}
+                <a href="{{ url_for('user.orders_search', page=nextPage) }}">Suivant >></a>
+            {% endif %}
+        </div>
+    </div>
+
+<style>
+    .nested-table-separator {
+        border-bottom: 2px solid #dee2e6;
+    }
+    .nested-table {
+        background-color: #f9f9f9;
+        margin-top: 10px;
+    }
+    .nested-table th, .nested-table td {
+        padding: 8px;
+        text-align: left;
+    }
+    .nested-table th {
+        background-color: #e9ecef;
+    }
+    .nested-table a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .nested-table a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    function toggleNestedTable(index) {
+        var nestedTable = document.getElementById('nested-table-' + index);
+        if (nestedTable.style.display === 'none') {
+            nestedTable.style.display = 'table-row';
+        } else {
+            nestedTable.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

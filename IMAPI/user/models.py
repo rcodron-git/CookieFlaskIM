@@ -7,7 +7,12 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from IMAPI.database import Column, PkModel, db, reference_col, relationship
 from IMAPI.extensions import bcrypt
+# models.py
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import validates
 
+#db = SQLAlchemy()
 
 class Role(PkModel):
     """A role for a user."""
@@ -63,3 +68,46 @@ class User(UserMixin, PkModel):
     def __repr__(self):
         """Represent instance as a unique string."""
         return f"<User({self.username!r})>"
+
+
+
+class Catalog(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(255), nullable=True)
+    category = db.Column(db.String(255), nullable=True)
+    subCategory = db.Column(db.String(255), nullable=True)
+    productType = db.Column(db.String(255), nullable=True)
+    ingramPartNumber = db.Column(db.String(255), nullable=False)
+    vendorPartNumber = db.Column(db.String(255), nullable=True)
+    upcCode = db.Column(db.String(255), nullable=True)
+    vendorName = db.Column(db.String(255), nullable=True)
+    endUserRequired = db.Column(db.Boolean, default=False)
+    hasDiscounts = db.Column(db.Boolean, default=False)
+    sku_type = db.Column(db.String(255), nullable=True)
+    discontinued = db.Column(db.Boolean, default=False)
+    newProduct = db.Column(db.Boolean, default=False)
+    directShip = db.Column(db.Boolean, default=False)
+    hasWarranty = db.Column(db.Boolean, default=False)
+    extraDescription = db.Column(db.Text, nullable=True)
+    replacementSku = db.Column(db.String(255), nullable=True)
+    authorizedToPurchase = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
+
+    def __repr__(self):
+        return f'<Catalog {self.description}>'
+
+    @validates('description')
+    def validate_description(self, key, description):
+        if len(description) > 500:
+            raise ValueError('Description cannot exceed 500 characters.')
+        return description
+
+    def save(self):
+        self.full_clean()
+        db.session.add(self)
+        db.session.commit()
+
+    def full_clean(self):
+        self.validate_description('description', self.description)

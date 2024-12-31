@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <h1>IMAPI Catalog</h1>
+        <h3>Here is a list of all the items in the IMAPI catalog.</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Item Name</th>
+                    <th>Item Description</th>
+                    <th></th>
+                    <th>Item Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.ingramPartNumber }}</td>
+                        <td>{{ item.vendorName }}</td>
+                        <td><h6>{{ item.description }}</h6></td>
+                        <td>{{ item.price }}</td>
+                    <td><a href="{{ url_for('user.catalog_item', id=item.ingramPartNumber) }}">More informations</a></td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div>
+        <h4>Next Pages</h4>
+                <a href="{{ url_for('user.online_catalog', page=page) }}">next >></a>
+    </div>
+    </div>
+
+{% endblock %}

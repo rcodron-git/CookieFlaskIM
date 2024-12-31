@@ -31,14 +31,15 @@
   "homepage": "https://github.com/robert.codron/IMAPI#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.7.2",
+    "@popperjs/core": "2.11.8",
     "bootstrap": "5.3.3",
     "jquery": "3.7.1",
-    "@popperjs/core": "2.11.8"
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.26.0",
-    "@babel/preset-env": "7.26.0",
     "@babel/eslint-parser": "7.25.9",
+    "@babel/preset-env": "7.26.0",
     "babel-loader": "9.2.1",
     "chokidar": "4.0.3",
     "concurrently": "9.1.0",
