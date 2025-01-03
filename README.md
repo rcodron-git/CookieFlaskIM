@@ -3,7 +3,9 @@
 This project is a **NON OFFICIAL** demonstration on how to use the API for **reseller** provided by Ingram Micro.
 There is no support for this project, it is **just a demonstration**.
 
-**At this time, I won't add any new features to this project.** it's provide as is.
+**At this time, I won't add any new features to this project.** it's provide as it.  
+
+**WARNING** this project is not for production, only for test
 
 ## Ingram Micro API
 
