@@ -35,13 +35,19 @@ To run the development version of the app
 docker compose up flask-dev
 ```
 
-To run the production version of the app
-
-```bash
-docker compose up flask-prod
-```
-
 The list of `environment:` variables in the `docker compose.yml` file takes precedence over any variables specified in `.env`.
+By the way, this is an example of .env 
+
+```text
+API_BASE_URL=https://api.ingrammicro.com/sandbox
+SESSION_SECRET=your-secret-key
+IM_CUSTOMERCONTACT=your-customer-contact
+IM_COUNTRYCODE=your-country-code
+IM_CUSTOMER_NUMBER=your-customer-number
+IM_CORRELATION_ID=your-correlation-id
+IM_SENDERID=your-sender-id
+PORT=Port-of-your-app-if-needed
+```
 
 To run any commands using the `Flask CLI`
 
